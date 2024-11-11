@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "tests:e2e": "playwright test --config=e2e.config.ts --project=Chromium"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
