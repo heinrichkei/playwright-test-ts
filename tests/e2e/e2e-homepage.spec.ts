@@ -10,7 +10,7 @@ test.describe("Homepage", () => {
         // await page.goto('https://fle.ulis.vnu.edu.vn/')
     })
     // Homepage name + header
-    test("Page name + Header", async ({page}) => {
+    test("Page name + Header", async () => {
         // Expect to have title
         await homePage.assertPageTitle()
         // Verify logo is visible
@@ -19,5 +19,9 @@ test.describe("Homepage", () => {
         await homePage.assertTextMenu()
         // Verify FAQ button is visible and have correct text
         await homePage.assertButtonFAQ()
+    })
+    test("Slider + info section", async() => {
+        // Verify slider is visible
+        await homePage.assertHeroSlider()
     })
 })

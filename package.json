@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tests:e2e": "playwright test --config=e2e.config.ts --project=Chromium"
+    "tests:e2e": "playwright test --config=e2e.config.ts --project=Chromium",
+    "jenkins-server": "java -jar jenkins.war --httpPort=9090 --enable-future-java"
   },
   "keywords": [],
   "author": "",

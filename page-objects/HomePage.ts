@@ -9,6 +9,7 @@ export class HomePage {
     readonly menuHoTroSV: Locator
     readonly menuTinTuc: Locator
     readonly btnHoiDap: Locator
+    readonly sliderHero: Locator
     // Init selectors using constructor
     constructor(page: Page) {
         this.page = page
@@ -18,6 +19,7 @@ export class HomePage {
         this.menuHoTroSV = page.locator("li[id='menu-item-7947'] a[class=' main-menu-link main-menu-link-top']")
         this.menuTinTuc = page.locator("li[id='menu-item-6407'] a[class=' main-menu-link main-menu-link-top']")
         this.btnHoiDap = page.locator('#ctabutton')
+        this.sliderHero = page.locator('#rev_slider_53_1')
     }
     // Define page methods
     async visit() {
@@ -38,5 +40,8 @@ export class HomePage {
     async assertButtonFAQ() {
         await expect(this.btnHoiDap).toBeVisible()
         await expect(this.btnHoiDap).toContainText('HỎI ĐÁP')
+    }
+    async assertHeroSlider() {
+        await expect(this.sliderHero).toBeVisible()
     }
 }
