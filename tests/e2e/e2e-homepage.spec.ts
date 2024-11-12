@@ -24,7 +24,7 @@ test.describe("Homepage", () => {
             data.menuTinTuc
         )
         // Verify FAQ button is visible and have correct text
-        await homePage.assertButtonFAQ(data.menuChuongTrinh)
+        await homePage.assertButtonFAQ(data.btnHoiDap)
     })
     test("Slider + info section", async() => {
         // Verify slider is visible
