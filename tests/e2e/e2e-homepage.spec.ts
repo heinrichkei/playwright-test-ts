@@ -1,5 +1,6 @@
 import { test } from '@playwright/test'
 import { HomePage } from '../../page-objects/HomePage'
+import * as data from '../../data/homePage-data.json'
 
 test.describe("Homepage", () => {
     let homePage: HomePage
@@ -12,13 +13,18 @@ test.describe("Homepage", () => {
     // Homepage name + header
     test("Page name + Header", async () => {
         // Expect to have title
-        await homePage.assertPageTitle()
+        await homePage.assertPageTitle(data.title)
         // Verify logo is visible
         await homePage.assertLogoVisible()
         // Verify texts of header menu items
-        await homePage.assertTextMenu()
+        await homePage.assertTextMenu(
+            data.menuTuyenSinh,
+            data.menuChuongTrinh,
+            data.menuHoTroSV,
+            data.menuTinTuc
+        )
         // Verify FAQ button is visible and have correct text
-        await homePage.assertButtonFAQ()
+        await homePage.assertButtonFAQ(data.btnHoiDap)
     })
     test("Slider + info section", async() => {
         // Verify slider is visible

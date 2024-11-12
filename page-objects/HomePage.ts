@@ -25,21 +25,25 @@ export class HomePage {
     async visit() {
         await this.page.goto("https://fle.ulis.vnu.edu.vn/")
     }
-    async assertPageTitle() {
-        await expect(this.page).toHaveTitle("FLE ULIS - Khoa Đào tạo & Bồi dưỡng Ngoại ngữ - Trường ĐH Ngoại ngữ - ĐHQGHN") 
+    async assertPageTitle(title: string) {
+        await expect(this.page).toHaveTitle(title) 
     }
     async assertLogoVisible() {
         await expect(this.imgLogo).toBeVisible()
     }
-    async assertTextMenu() {
-        await expect(this.menuTuyenSinh).toContainText('Tuyển sinh')
-        await expect(this.menuChuongTrinh).toContainText('Chương trình')
-        await expect(this.menuHoTroSV).toContainText('Hỗ trợ sinh viên')
-        await expect(this.menuTinTuc).toContainText('Tin tức')
+    async assertTextMenu(
+        textTuyenSinh: string,
+        textChuongTrinh: string,
+        textHoTroSV: string,
+        textTinTuc: string) {
+        await expect(this.menuTuyenSinh).toContainText(textTuyenSinh)
+        await expect(this.menuChuongTrinh).toContainText(textChuongTrinh)
+        await expect(this.menuHoTroSV).toContainText(textHoTroSV)
+        await expect(this.menuTinTuc).toContainText(textTinTuc)
     }
-    async assertButtonFAQ() {
+    async assertButtonFAQ(textFAQ: string) {
         await expect(this.btnHoiDap).toBeVisible()
-        await expect(this.btnHoiDap).toContainText('HỎI ĐÁP')
+        await expect(this.btnHoiDap).toContainText(textFAQ)
     }
     async assertHeroSlider() {
         await expect(this.sliderHero).toBeVisible()
