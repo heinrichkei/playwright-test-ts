@@ -13,21 +13,38 @@ test.describe("Homepage", () => {
     // Homepage name + header
     test("Page name + Header", async () => {
         // Expect to have title
-        await homePage.assertPageTitle(data.title)
+        await homePage.assertPageTitle(data.header.title)
         // Verify logo is visible
         await homePage.assertLogoVisible()
         // Verify texts of header menu items
         await homePage.assertTextMenu(
-            data.menuTuyenSinh,
-            data.menuChuongTrinh,
-            data.menuHoTroSV,
-            data.menuTinTuc
+            data.header.menuTuyenSinh,
+            data.header.menuChuongTrinh,
+            data.header.menuHoTroSV,
+            data.header.menuTinTuc
         )
         // Verify FAQ button is visible and have correct text
-        await homePage.assertButtonFAQ(data.btnHoiDap)
+        await homePage.assertButtonFAQ(data.header.btnHoiDap)
     })
     test("Slider + info section", async() => {
         // Verify slider is visible
         await homePage.assertHeroSlider()
+        // Verify title & desc of info cards
+        await homePage.assertInfoCards1(
+            data.info.card1TitleNum,
+            data.info.card1TitleSuffix,
+            data.info.card1Desc1,
+            data.info.card1Desc2
+        )
+        await homePage.assertInfoCards2(
+            data.info.card2TitleNum,
+            data.info.card2TitleSuffix,
+            data.info.card2Desc1,
+            data.info.card2Desc2
+        )
+        await homePage.assertInfoCards3(
+            data.info.card3Title,
+            data.info.card3Desc
+        )
     })
 })

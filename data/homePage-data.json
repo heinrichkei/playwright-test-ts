@@ -1,8 +1,22 @@
 {
-    "title": "FLE ULIS - Khoa Đào tạo & Bồi dưỡng Ngoại ngữ - Trường ĐH Ngoại ngữ - ĐHQGHN",
-    "menuTuyenSinh": "Tuyển sinh",
-    "menuChuongTrinh": "Chương trình",
-    "menuHoTroSV": "Hỗ trợ sinh viên",
-    "menuTinTuc": "Tin tức",
-    "btnHoiDap": "HỎI ĐÁP"
+    "header": {
+        "title": "FLE ULIS - Khoa Đào tạo & Bồi dưỡng Ngoại ngữ - Trường ĐH Ngoại ngữ - ĐHQGHN",
+        "menuTuyenSinh": "Tuyển sinh",
+        "menuChuongTrinh": "Chương trình",
+        "menuHoTroSV": "Hỗ trợ sinh viên",
+        "menuTinTuc": "Tin tức",
+        "btnHoiDap": "HỎI ĐÁP"
+    },
+    "info": {
+        "card1TitleNum": "12",
+        "card1TitleSuffix": "+ năm",
+        "card1Desc1": "Chương trình được",
+        "card1Desc2": "triển khai & đào tạo",
+        "card2TitleNum": "1200",
+        "card2TitleSuffix": "+",
+        "card2Desc1": "Cựu sinh viên,",
+        "card2Desc2": "sinh viên theo học",
+        "card3Title": "120",
+        "card3Desc": "Số tín chỉ được đào tạo & công nhận chuyển tiếp tại nhiều quốc gia"
+    }
 }
