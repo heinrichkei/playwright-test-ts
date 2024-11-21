@@ -8,7 +8,6 @@ test.describe("Homepage", () => {
     test.beforeEach(async ({page}) => {
         homePage = new HomePage(page)
         await homePage.visit()
-        // await page.goto('https://fle.ulis.vnu.edu.vn/')
     })
     // Homepage name + header
     test("Page name + Header", async () => {
