@@ -5,7 +5,7 @@ pipeline {
         stage('Trigger GitHub Action') {
             steps {
                 script {
-                    def ghAccessToken = credentials('github_token') 
+                    def ghAccessToken = credentials('c455908e-c5f1-4a67-bdfd-c5b753115d25') 
                     def githubApiUrl = 'https://api.github.com/repos/heinrichkei/playwright-test-ts/actions/workflows/playwright.yml/dispatches' 
                     def response = httpRequest method: 'POST', 
                                     url: githubApiUrl, 
