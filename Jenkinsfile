@@ -21,7 +21,7 @@ pipeline {
         GIT_AUTHOR = sh(returnStdout: true, script: "git log -n 1 --format=%ae ${GIT_COMMIT}").trim()
         GIT_COMMIT_SHORT = sh(returnStdout: true, script: "git rev-parse --short ${GIT_COMMIT}").trim()
         GIT_INFO = "- Branch: ${GIT_BRANCH}\n- Commit Message: ${GIT_MESSAGE}\n- Commit: ${GIT_COMMIT_SHORT}"
-        TEXT_BREAK = "---🚧🚧🚧---"
+        TEXT_BREAK = "\\-\\-\\-🚧🚧🚧\\-\\-\\-"
         TEXT_PRE_BUILD = "${TEXT_BREAK}\n${GIT_INFO}\n\n**${JOB_NAME}** is building..."
 
         // Telegram Message Success and Failure
