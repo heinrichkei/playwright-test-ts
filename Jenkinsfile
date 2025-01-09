@@ -25,13 +25,17 @@ pipeline {
         TEXT_PRE_BUILD = "${TEXT_BREAK}\n${GIT_INFO}\n\n**${JOB_NAME}** is building..."
 
         // Telegram Message Success and Failure
-        TEXT_SUCCESS_BUILD = "✅ **Build SUCCESSFUL!!!**: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n\n[Check it here](${env.BUILD_URL})"
-        TEXT_FAILURE_BUILD = "❌ **Build FAILED!**: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n\n[Check it here](${env.BUILD_URL})"
+        TEXT_SUCCESS_BUILD = "✅ **Build SUCCESSFUL**: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n\n[Check it here](${env.BUILD_URL})"
+        TEXT_FAILURE_BUILD = "❌ **Build FAILED**: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n\n[Check it here](${env.BUILD_URL})"
     }
     stages {
         stage('Pre-Build') {
             steps {
-                sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_PRE_BUILD}' --form chat_id='${CHAT_ID}'"
+                withCredentials([string(credentialsId: 'Telegram_bot_token', variable: 'TOKEN'), string(credentialsId: 'Telegram_bot_ID', variable: 'CHAT_ID')]) {
+                    sh '''
+                        curl -X POST -H "Content-Type: application/json" -d '{"chat_id":"'"${CHAT_ID}"'", "text": "'"${TEXT_PRE_BUILD}"'", "parse_mode": "MarkdownV2", "disable_notification": false}' https://api.telegram.org/bot${TOKEN}/sendMessage
+                    '''
+                }
             }
         }
         stage('Checkout') {
