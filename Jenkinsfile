@@ -8,8 +8,9 @@ pipeline {
                     try {
                         // Step 1: Trigger the Workflow
                         def url = "https://api.github.com/repos/heinrichkei/playwright-test-ts/actions/workflows/playwright.yml/dispatches"
-                        def ghToken = credentials('github-token')
-                        sh(script: 'curl -X POST -H "Accept: application/vnd.github.v3+json" -H "authorization: Bearer ' + ghToken.secret + '" -d \'{"ref":"YOUR_BRANCH_NAME"}\' "${url}"', returnStdout: true).trim()
+                        def ghToken = credentials('github-user')
+                        def branchName = "main" // Replace with your branch name
+                        sh(script: "curl -X POST -H 'Accept: application/vnd.github.v3+json' -H 'authorization: Bearer ${ghToken.secret}' -d '{\"ref\":\"${branchName}\"}' \"${url}\"", returnStdout: true).trim()
 
                         // Step 2 & 3: Get Workflow Run ID and Poll for Completion
                         def workflowRunsUrl = "https://api.github.com/repos/heinrichkei/playwright-test-ts/actions/runs"
@@ -20,7 +21,7 @@ pipeline {
                         sleep time: 10, unit: 'SECONDS'
                         
                         while (status == "queued" || status == "in_progress") {
-                            def response = sh(script: "curl -H 'Accept: application/vnd.github.v3+json' -H 'authorization: Bearer ' + ghToken.secret + '" ${workflowRunsUrl}", returnStdout: true).trim()
+                            def response = sh(script: "curl -H 'Accept: application/vnd.github.v3+json' -H 'authorization: Bearer ${ghToken.secret}' ${workflowRunsUrl}", returnStdout: true).trim()
                             def runs = readJSON text: response
                             workflowRunID = runs.workflow_runs[0].id
                             status = runs.workflow_runs[0].status
@@ -32,13 +33,12 @@ pipeline {
                         
                         // Step 4: Retrieve the Workflow Result
                         def workflowRunDetailUrl = "${workflowRunsUrl}/${workflowRunID}"
-                        def detailResponse = sh(script: "curl -H 'Accept: application/vnd.github.v3+json' -H 'authorization: Bearer ' + ghToken.secret + '" ${workflowRunDetailUrl}", returnStdout: true).trim()
+                        def detailResponse = sh(script: "curl -H 'Accept: application/vnd.github.v3+json' -H 'authorization: Bearer ${ghToken.secret}' ${workflowRunDetailUrl}", returnStdout: true).trim()
                         def workflowRunDetails = readJSON text: detailResponse
                         
                         echo "Workflow Run Details: ${workflowRunDetails}"
-                        
                     } catch (Exception e) {
-                        echo "Failed to invoke GitHub Actions Workflow or retrieve results: ${e.getMessage()}"
+                        echo "An error occurred: ${e.message}"
                         currentBuild.result = 'FAILURE'
                     }
                 }
