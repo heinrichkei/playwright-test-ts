@@ -1,19 +1,14 @@
 pipeline {
     agent any
-    /* triggers {
-        pollSCM('H/5 * * * *')
-    } */
+    triggers {
+        pollSCM('@midnight')
+    }
     tools {
         nodejs 'NodeJS' // Use the name you provided in the Global Tool Configuration
     }
     options {
         timestamps()
         disableConcurrentBuilds()
-    }
-    environment {
-        // Telegram configuration
-        TOKEN = credentials('Telegram_bot_token')
-        CHAT_ID = credentials('Telegram_bot_ID')
     }
     stages {
         stage('Checkout') {
@@ -53,13 +48,15 @@ pipeline {
         success {
             script {
                 echo 'Tests passed successfully!'
-                sh 'curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":${CHAT_ID}, \\\"text\\\": \\\"Build succeeded!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${TOKEN}/sendMessage'
+                // Trigger another pipeline upon success
+                build job: 'telegram-notifications'
             }
         }
         failure {
             script {
                 echo 'Tests failed. Check the test results for more details.'
-                sh 'curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":${CHAT_ID}, \\\"text\\\": \\\"Build failed!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${TOKEN}/sendMessage'
+                // Trigger another pipeline upon success
+                build job: 'telegram-notifications'
             }
         }
     }
