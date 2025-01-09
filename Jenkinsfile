@@ -25,8 +25,8 @@ pipeline {
         TEXT_PRE_BUILD = "${TEXT_BREAK}\n${GIT_INFO}\n\n**${JOB_NAME}** is building..."
 
         // Telegram Message Success and Failure
-        TEXT_SUCCESS_BUILD = "✅ **Build SUCCESSFUL**: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n\n[Check it here](${env.BUILD_URL})"
-        TEXT_FAILURE_BUILD = "❌ **Build FAILED**: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n\n[Check it here](${env.BUILD_URL})"
+        TEXT_SUCCESS_BUILD = "✅ **Build SUCCESSFUL**: ${env.JOB_NAME} \\#${env.BUILD_NUMBER}\n\n[Check it here](${env.BUILD_URL})"
+        TEXT_FAILURE_BUILD = "❌ **Build FAILED**: ${env.JOB_NAME} \\#${env.BUILD_NUMBER}\n\n[Check it here](${env.BUILD_URL})"
     }
     stages {
         stage('Pre-Build') {
