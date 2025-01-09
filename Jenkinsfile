@@ -10,6 +10,11 @@ pipeline {
         timestamps()
         disableConcurrentBuilds()
     }
+    environment {
+        // Telegram configuration
+        TOKEN = credentials('Telegram_bot_token')
+        CHAT_ID = credentials('Telegram_bot_ID')
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -46,10 +51,16 @@ pipeline {
             sh "ls"
         }
         success {
-            echo 'Tests passed successfully!'
+            script {
+                echo 'Tests passed successfully!'
+                bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":${CHAT_ID}, \\\"text\\\": \\\"Build succeeded!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${TOKEN}/sendMessage"
+            }
         }
         failure {
-            echo 'Tests failed. Check the test results for more details.'
+            script {
+                echo 'Tests failed. Check the test results for more details.'
+                bat "curl -X POST -H \"Content-Type: application/json\" -d \"{\\\"chat_id\\\":${CHAT_ID}, \\\"text\\\": \\\"Build failed!\\\", \\\"disable_notification\\\": false}\" https://api.telegram.org/bot${TOKEN}/sendMessage"
+            }
         }
     }
 }
