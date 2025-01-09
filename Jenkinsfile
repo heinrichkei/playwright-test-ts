@@ -71,15 +71,21 @@ pipeline {
         success {
             script {
                 echo 'Tests passed successfully!'
-                // Send Telegram Message
-                sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_SUCCESS_BUILD}' --form chat_id='${CHAT_ID}'"
+                withCredentials([string(credentialsId: 'Telegram_bot_token', variable: 'TOKEN'), string(credentialsId: 'Telegram_bot_ID', variable: 'CHAT_ID')]) {
+                    sh '''
+                        curl -X POST -H "Content-Type: application/json" -d '{"chat_id":"'"${CHAT_ID}"'", "text": "'"${TEXT_SUCCESS_BUILD}"'", "parse_mode": "MarkdownV2", "disable_notification": false}' https://api.telegram.org/bot${TOKEN}/sendMessage
+                    '''
+                }
             }
         }
         failure {
             script {
                 echo 'Tests failed. Check the test results for more details.'
-                // Send Telegram Message
-                sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_FAILURE_BUILD}' --form chat_id='${CHAT_ID}'"
+                withCredentials([string(credentialsId: 'Telegram_bot_token', variable: 'TOKEN'), string(credentialsId: 'Telegram_bot_ID', variable: 'CHAT_ID')]) {
+                    sh '''
+                        curl -X POST -H "Content-Type: application/json" -d '{"chat_id":"'"${CHAT_ID}"'", "text": "'"${TEXT_FAILURE_BUILD}"'", "parse_mode": "MarkdownV2", "disable_notification": false}' https://api.telegram.org/bot${TOKEN}/sendMessage
+                    '''
+                }
             }
         }
     }
